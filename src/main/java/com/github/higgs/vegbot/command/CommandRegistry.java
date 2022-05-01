@@ -34,7 +34,7 @@ public class CommandRegistry {
     private void registerDefaultCommands() {
         registerCommand(Command.builder().keys("help", "info")
                 .arguments(Args.optional(Args.STRING.named("command")))
-                .information("Displays information about ARABot's commands")
+                .information("Displays information about VegBot's commands")
                 .usage("?help [<command>]")
                 .executor(HelpCommand::new)
                 .build());
