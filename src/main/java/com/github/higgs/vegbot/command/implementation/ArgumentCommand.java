@@ -17,7 +17,7 @@ public class ArgumentCommand implements CommandExecutor {
         Optional<String> argument = context.requestArgument("argument");
 
         if(argument.isPresent()) {
-             List<String> message = arguments.getOrDefault(argument.get().toUpperCase(Locale.ROOT), Collections.singletonList("That is not a listed fallacy. Please pick from the list found at ?fallacy"));
+             List<String> message = arguments.getOrDefault(argument.get().toUpperCase(Locale.ROOT), Collections.singletonList("That is not a listed argument. Please pick from the list found at ?fallacy"));
              EmbedBuilder embed = new EmbedBuilder()
                      .setTitle("📚 Your Anti-Vegan Argument 📚")
                      .setColor(Color.CYAN);
