@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+group 'com.github.higgs'
+version '0.0.1'
+
+jar {
+    manifest {
+        attributes 'Main-Class': "com.github.higgs.vegbot.VegBot"
+    }
+}
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'mysql:mysql-connector-java:5.1.6'
+    implementation("net.dv8tion:JDA:5.0.0-alpha.5") {
+        exclude module: 'opus-java'
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
