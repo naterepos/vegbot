@@ -41,6 +41,7 @@ public class ArgumentCommand implements CommandExecutor {
                                     " • `overpopulation`  -  If we don't eat meat, there will be overpopulation!\n" +
                                     " • `pesticides`  -  Veganism requires excessive pesticide use!\n" +
                                     " • `plant_feelings`  -  Plants have feelings, right?\n" +
+                                    " • `predators`  -  If a lion does it, I can too!\n" +
                                     " • `price`  -  I don't have the money to go vegan!\n" +
                                     " • `privilege`  -  Veganism is for privileged people!\n" +
                                     " • `protein`  -  Meat is the only source of reliable protein!\n" +
@@ -229,9 +230,20 @@ public class ArgumentCommand implements CommandExecutor {
 
     private static final String ECONOMY =
             "For those that are more economically minded, there is an immediate concern for the jobs of animal farmers when discussions of vegan populations comes up. The first response to this issue is to point out another example of capitalism moving " +
-                    "the economic demand. When renewable energies started to become cheaper than fossil fuels, we didn't say that we shouldn't transition because the people in coal mines would lose their jobs. Instead, we realized that the people who used to work in coal mines " +
-                    "could transition into new jobs; especially when proper training programs were given by the government. In that same vein, the vegan movement already has produced programs to help animal farms transition to vegan farming practices. Additionally, a majority of " +
-                    "modern animal factories are run by massive corporations paying poor wages with poor working conditions. Despite the imagery they try to push, losing these companies is not a detriment to anyone but their shareholders.";
+            "the economic demand. When renewable energies started to become cheaper than fossil fuels, we didn't say that we shouldn't transition because the people in coal mines would lose their jobs. Instead, we realized that the people who used to work in coal mines " +
+            "could transition into new jobs; especially when proper training programs were given by the government. In that same vein, the vegan movement already has produced programs to help animal farms transition to vegan farming practices. Additionally, a majority of " +
+            "modern animal factories are run by massive corporations paying poor wages with poor working conditions. Despite the imagery they try to push, losing these companies is not a detriment to anyone but their shareholders.";
+
+    private static final String PREDATORS =
+            "One school of thought that is popular with a carnist mentality is that other predators kill animals so we should be able to as well. However, this logic runs into a few road blocks. First, we have to comprehend the idea of \"obligate carnivores\". These are animals " +
+            "that cannot survive without killing for food. This is different to something like a facultative carnivore which do not need to eat other animals to survive. Since an obligate carnivore has no choice in the matter, it is difficult to hold them accountable. Similarly, most " +
+            "would not fault someone who defended themselves against an attacker considering it was a defense for their life.";
+
+    private static final String PREDATORS_2 =
+            "The second issue with this thought process is the fact we are assigning human morals to an animal that is not a moral agent. This is different to saying an animal deserves moral consideration, of course. To illustrate this, let's use an example of a two year old child. If " +
+            "the child were to engage in morally wrong behavior, we'd give the child leniency as they don't know any better. They are simply following what they've seen and are incapable of moral decision making; at least, that is, when compared to an adult. However, it'd be difficult to reason " +
+            "that adults should be able to have the ability to harm the child simply because they lack moral decision making skills. In this, we see that both children and animals are both deserving of moral consideration by humans but are not moral agents. Therefore, we should not judge other animals " +
+            "as we judge other humans.";
 
     static {
         arguments.put("PLANT_FEELINGS", Arrays.asList(PLANT_FEELINGS, PLANT_FEELINGS_2));
@@ -251,6 +263,6 @@ public class ArgumentCommand implements CommandExecutor {
         arguments.put("HUMANS_FIRST", Collections.singletonList(HUMANS_FIRST));
         arguments.put("BAD_VEGAN", Arrays.asList(BAD_VEGAN, BAD_VEGAN_2));
         arguments.put("ECONOMY", Collections.singletonList(ECONOMY));
-
+        arguments.put("PREDATORS", Arrays.asList(PREDATORS, PREDATORS_2));
     }
 }
