@@ -21,8 +21,12 @@ public class ArgumentCommand implements CommandExecutor {
              EmbedBuilder embed = new EmbedBuilder()
                      .setTitle("📚 Your Anti-Vegan Argument 📚")
                      .setColor(Color.CYAN);
-            for (String field : message) {
+            for(String field : message) {
                 embed.addField("", field, false);
+            }
+            String picture = pictures.getOrDefault(argument.get().toUpperCase(Locale.ROOT), null);
+            if(picture != null) {
+                embed.setImage(picture);
             }
             context.getChannel().sendMessageEmbeds(embed.build()).queue();
         } else {
@@ -54,7 +58,9 @@ public class ArgumentCommand implements CommandExecutor {
         }
         return CommandResult.empty();
     }
+
     private static final Map<String, List<String>> arguments = new HashMap<>();
+    private static final Map<String, String> pictures = new HashMap<>();
 
     private static final String PLANT_FEELINGS =
             "One common critique of veganism is that vegans are actually hurting more creatures because they eat plants " +
@@ -247,18 +253,22 @@ public class ArgumentCommand implements CommandExecutor {
 
     static {
         arguments.put("PLANT_FEELINGS", Arrays.asList(PLANT_FEELINGS, PLANT_FEELINGS_2));
+        pictures.put("PLANT_FEELINGS", "https://cdn.discordapp.com/attachments/942575408312881164/971256542609424444/6C7B0777-121D-4A48-AF2E-C1A0F7360F2D_1_105_c.jpeg");
         arguments.put("NIRVANA", Arrays.asList(NIRVANA, NIRVANA_2));
         arguments.put("FOOD_CHAIN", Arrays.asList(FOOD_CHAIN, FOOD_CHAIN_2));
         arguments.put("PRICE", Collections.singletonList(PRICE));
         arguments.put("PESTICIDES", Collections.singletonList(PESTICIDES));
         arguments.put("PROTEIN", Arrays.asList(PROTEIN, PROTEIN_2));
+        pictures.put("PROTEIN", "https://cheatdaydesign.com/wp-content/uploads/2019/01/Vegan-Protein-Sources-720x720.jpg.webp");
         arguments.put("TASTE", Arrays.asList(TASTE, TASTE_2));
+        pictures.put("TASTE", "https://pbs.twimg.com/media/Bn7Fb4ICEAErPsK?format=png");
         arguments.put("ANCESTORS", Collections.singletonList(ANCESTORS));
         arguments.put("OVERPOPULATION", Arrays.asList(OVERPOPULATION, OVERPOPULATION_2, OVERPOPULATION_3));
         arguments.put("ESTROGEN", Arrays.asList(ESTROGEN, ESTROGEN_2));
         arguments.put("CULTURE", Collections.singletonList(CULTURE));
         arguments.put("HUNTING", Arrays.asList(HUNTING, HUNTING_2, HUNTING_3));
         arguments.put("HUMANE", Arrays.asList(HUMANE_MEAT, HUMANE_MEAT_2, HUMANE_MEAT_3, HUMANE_MEAT_4));
+        pictures.put("HUMANE", "https://i0.wp.com/www.eatplantslivewell.com/wp-content/uploads/2015/06/B9rhq9hCAAEjW2Z.jpg");
         arguments.put("PRIVILEGE", Arrays.asList(PRIVILEGE, PRIVILEGE_2));
         arguments.put("HUMANS_FIRST", Collections.singletonList(HUMANS_FIRST));
         arguments.put("BAD_VEGAN", Arrays.asList(BAD_VEGAN, BAD_VEGAN_2));
