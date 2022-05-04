@@ -156,14 +156,13 @@ public class ArgumentCommand implements CommandExecutor {
 
     private static final String ESTROGEN =
             "A common concern with health on a plant based diet is exogenous (externally sourced) estrogens in foods. This concern usually targets soy, but questions are often posed to other foods like alcohol and flax seeds. " +
-            "What people are really talking about with this situation is a class of plant hormones called phytoestrogens, or more specifically for our discussion, isoflavones. These hormones, while somewhat mimicking the general molecular structure of estrogen, is nowhere " +
-            "near as potent with some specific types of isoflavones actually limiting the binding of estradiol, the most potent form of animal estrogen found in some animal foods. ";
+            "What people are really talking about with this situation is a class of plant hormones called phytoestrogens, or more specifically for our discussion, isoflavones. Isoflavones, while somewhat mimicking the general molecular structure of estrogen, are nowhere " +
+            "near as potent with some of isoflavones actually preventing other estrogens from properly binding. ";
 
     private static final String ESTROGEN_2 =
-            "Another point of interest with plant-based diets and sex hormone production is that there are is absolutely zero reliable evidence to suggest an significant increase in estrogen or decrease " +
-            "in androgens (male sex hormone) with people on long term plant-based diets. There is one case study uninformed skeptics like to point to wherein a man developed feminine features after consuming 12 servings of soy a day. However, this is in contrast with " +
-            "the vast number of peer-reviewed studies with far better sample sizes and significant controls that prove otherwise. With this, it is not surprising that accredited health organizations like Harvard Health recommend soy as well as other " +
-            "plant-based foods as healthy proteins for all ages and lifestyles.";
+            "Another point of interest with plant-based diets and sex hormone production is that the vast quantity of peer reviewed studies show a plant based diet does not show any uptick in estrogen production nor " +
+            "does it impair testosterone production. This, paired with common plant based proteins like soy being a fantastic source of antioxidants, reveal why large health organizations like Harvard Health suggest plant based proteins " +
+            "as a great way to improve public health.";
 
     private static final String CULTURE =
             "When confronted with an ethical issue, an immediate out is to point to others in one's culture to show that other people are doing it so it must, by proxy, be morally just. This same argument " +
