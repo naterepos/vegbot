@@ -26,7 +26,7 @@ public class VegBot extends ListenerAdapter {
 
     public static void main(String[] args) throws LoginException, InterruptedException {
         instance = new VegBot();
-        instance.jda = JDABuilder.createLight(VegBot.<String>getSetting("Token").orElseThrow(LoginException::new), GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGE_REACTIONS)
+        instance.jda = JDABuilder.createLight(VegBot.getSetting("Token"), GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGE_REACTIONS)
                 .setActivity(Activity.playing("Type ?help to get started"))
                 .addEventListeners(new ChatEvents())
                 .addEventListeners(new ConnectionEvents())
@@ -37,40 +37,50 @@ public class VegBot extends ListenerAdapter {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> Optional<T> getSetting(String setting) {
+    public static <T> T getSetting(String setting) {
         Properties setup = new Properties();
         try {
             setup.load(VegBot.class.getResourceAsStream("/Setup.properties"));
             Properties settings = new Properties();
-            settings.load(new FileInputStream(setup.getProperty("TestingPath")));
-            //TODO: add ability to toggle boolean to make config file pop up in same place as jar. Otherwise, we want to keep it in normal config location for runnables
+            if(setup.getProperty("UseCustomPath").equalsIgnoreCase("true")) {
+                settings.load(new FileInputStream(setup.getProperty("ConfigPath")));
+            } else {
+                settings.load(new FileInputStream(setup.getProperty("TestingPath")));
+            }
 
             if(settings.containsKey(setting)) {
                 String value = settings.getProperty(setting);
-
-                if(value.matches("^[-+]?\\d+$")) {
-                    long longNum = Long.parseLong(value);
-                    if(longNum > Integer.MAX_VALUE) {
-                        return Optional.of((T) ((Long) longNum));
+                // Handles strings who are auto parsed as ints
+                if(value.startsWith("[STRING]")) {
+                    return (T) value.substring(8);
+                }
+                try {
+                    if(value.matches("^[-+]?\\d+$")) {
+                        long longNum = Long.parseLong(value);
+                        if(longNum > Integer.MAX_VALUE) {
+                            return (T) ((Long) longNum);
+                        } else {
+                            return (T) ((Integer) Integer.parseInt(value));
+                        }
+                    } else if(value.matches("[+-]?([0-9]*[.])?[0-9]+")) {
+                        return (T) ((Double) Double.parseDouble(value));
+                    } else if(value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) {
+                        return (T) Boolean.valueOf(setting);
                     } else {
-                        return Optional.of((T) ((Integer) Integer.parseInt(value)));
+                        return (T) value;
                     }
-                } else if(value.matches("[+-]?([0-9]*[.])?[0-9]+")) {
-                    return Optional.of((T) ((Double) Double.parseDouble(value)));
-                } else if(value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) {
-                    return Optional.of((T) Boolean.valueOf(setting));
-                } else {
-                    return Optional.of((T) value);
+                } catch(ClassCastException e) {
+                    return (T) value;
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return Optional.empty();
+        return (T) "";
     }
 
     public static Guild getGuild() {
-        return VegBot.getJDA().getGuildById(VegBot.<Long>getSetting("GuildID").orElse(0L));
+        return VegBot.getJDA().getGuildById(VegBot.<Long>getSetting("GuildID"));
     }
 
     public static CommandRegistry getCommands() {

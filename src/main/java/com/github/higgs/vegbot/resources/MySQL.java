@@ -187,10 +187,10 @@ public class MySQL {
 
     private Connection getConnection() {
         try {
-            String hostname = VegBot.<String>getSetting("MySQLHost").orElse(null);
-            String database = VegBot.<String>getSetting("MySQLDatabase").orElse(null);
-            String username = VegBot.<String>getSetting("MySQLUsername").orElse(null);
-            String password = VegBot.<String>getSetting("MySQLPassword").orElse(null);
+            String hostname = VegBot.getSetting("MySQLHost");
+            String database = VegBot.getSetting("MySQLDatabase");
+            String username = VegBot.getSetting("MySQLUsername");
+            String password = VegBot.getSetting("MySQLPassword");
 
             if(hostname == null || database == null || username == null || password == null) {
                 throw new SQLException("Could not load MySQL login correctly");

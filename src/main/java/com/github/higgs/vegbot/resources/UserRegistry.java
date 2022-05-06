@@ -23,7 +23,7 @@ public class UserRegistry {
     }
 
     private UserRegistry() {
-        Guild guild = VegBot.getJDA().getGuildById(VegBot.<Long>getSetting("GuildID").orElse(0L));
+        Guild guild = VegBot.getJDA().getGuildById(VegBot.<Long>getSetting("GuildID"));
         if(guild != null) {
             memberCache = guild.loadMembers().get();
         }
@@ -31,7 +31,7 @@ public class UserRegistry {
 
     public Optional<VegUser> getUser(long id) {
         final User user = VegBot.getJDA().retrieveUserById(id).complete();
-        Guild guild = VegBot.getJDA().getGuildById(VegBot.<Long>getSetting("GuildID").orElse(0L));
+        Guild guild = VegBot.getJDA().getGuildById(VegBot.<Long>getSetting("GuildID"));
         if(guild != null) {
             final Member member = guild.retrieveMember(user).complete();
             return Optional.of(new VegUser(user, member));
@@ -40,7 +40,7 @@ public class UserRegistry {
     }
 
     public List<Member> getAllMembers() {
-        Guild guild = VegBot.getJDA().getGuildById(VegBot.<Long>getSetting("GuildID").orElse(0L));
+        Guild guild = VegBot.getJDA().getGuildById(VegBot.<Long>getSetting("GuildID"));
         if(guild != null) {
             return instance.memberCache;
         }

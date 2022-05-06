@@ -10,7 +10,7 @@ public class ConnectionEvents extends ListenerAdapter {
 
     @Override
     public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent e) {
-        Guild guild = VegBot.getJDA().getGuildById(VegBot.<Long>getSetting("GuildID").orElse(0L));
+        Guild guild = VegBot.getJDA().getGuildById(VegBot.<Long>getSetting("GuildID"));
         if(guild != null && guild.getIdLong() == e.getGuild().getIdLong()) {
             VegBot.getUsers().addMemberToCache(e.getMember());
         }
