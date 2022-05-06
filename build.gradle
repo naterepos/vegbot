@@ -1,10 +1,14 @@
+import java.nio.file.Files
+import java.nio.file.Paths
+
 plugins {
     id 'java'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 group 'com.github.higgs'
-version '0.0.1'
+var version = '0.0.1'
+var name = 'VegBot'
 
 jar {
     manifest {
@@ -12,7 +16,19 @@ jar {
     }
 }
 
+shadowJar {
+    archiveBaseName.set(name)
+    archiveClassifier.set('')
+    archiveVersion.set(version)
+}
 
+shadowJar.doLast {
+    if(Files.exists(Paths.get("deploy.sh"))) {
+        ProcessBuilder pb = new ProcessBuilder("./deploy.sh")
+        pb.inheritIO()
+        pb.start()
+    }
+}
 repositories {
     mavenCentral()
 }

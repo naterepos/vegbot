@@ -2,3 +2,4 @@
 .idea/
 build/
 Settings.properties
+deploy.sh
