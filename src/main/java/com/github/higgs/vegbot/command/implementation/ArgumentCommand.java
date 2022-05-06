@@ -42,6 +42,7 @@ public class ArgumentCommand implements CommandExecutor {
                                     " • `humans_first`  -  We should put people's welfare first!\n" +
                                     " • `hunting`  -  Hunting is actually good for the environment!\n" +
                                     " • `nirvana`  -  It will never be perfect!\n" +
+                                    " • `omega_3`  -  You need omega-3s from fish!\n" +
                                     " • `overpopulation`  -  If we don't eat meat, there will be overpopulation!\n" +
                                     " • `pesticides`  -  Veganism requires excessive pesticide use!\n" +
                                     " • `plant_feelings`  -  Plants have feelings, right?\n" +
@@ -251,6 +252,20 @@ public class ArgumentCommand implements CommandExecutor {
             "that adults should be able to have the ability to harm the child simply because they lack moral decision making skills. In this, we see that both children and animals are both deserving of moral consideration by humans but are not moral agents. Therefore, we should not judge other animals " +
             "as we judge other humans.";
 
+    private static final String OMEGA_3 =
+            "In recent times, fat has been under the microscope to determine what exactly makes up healthy fat choices. The biggest take away from the current literature is to limit saturated fats while focusing on mono and polyunsaturated fats with a special focus on a specific fatty acid " +
+            "called an \"omega-3\". In popular culture, that has translated to cutting out eggs, milk, and flesh from land animals while focusing on fish consumption. However, this only partially covers the issue at hand. First, we need to understand that omega-3s come in many forms with focus on three: " +
+            "alpha-linolenic acid (ALA), eicosapentaeonic acid (EPA) and docosahexaenoic acid (DHA). EPA and DHA are generally found in animal sources while ALA is found in plant sources. If we want to conclude that DHA and EPA are inaccessible for plant-based eaters, we might say that a plant-based diet is unhealthy. " +
+            "However, this is not the case.";
+
+    private static final String OMEGA_3_2 =
+            "First, we need to note that ALA can be converted into EPA and DHA inside the human body. The conversion rate varies but can be estimated at around ~15%. This means, to get the necessary ~100mg of EPA and DHA a day, you need roughly 675mg of ALA. For reference, 3 tbsp of flax meal is ~705mg of ALA which is " +
+            "plenty for the recommended daily value. This isn't considering that there are many other sources of ALA throughout the day such as walnuts, chia seeds, some vegetable oils, soy products, and much more. All of this is to say that it is relatively easy to get enough omega-3s from plant based whole foods alone.";
+
+    private static final String OMEGA_3_3 =
+            "Finally, it is of value to know the EPA and DHA in fish is not actually synthesized by fish but rather the micro algae they consume. Which is why algae as well as the increasingly popular algae oil supplements (replacement for fish oil) are common for those looking to increase omega-3 levels without " +
+            "the hassle of eating whole foods. This is especially important because studies have found that the bioavailability of DHA from algae oil is equivalent to that from cooked salmon.";
+
     static {
         arguments.put("PLANT_FEELINGS", Arrays.asList(PLANT_FEELINGS, PLANT_FEELINGS_2));
         pictures.put("PLANT_FEELINGS", "https://cdn.discordapp.com/attachments/942575408312881164/971256542609424444/6C7B0777-121D-4A48-AF2E-C1A0F7360F2D_1_105_c.jpeg");
@@ -274,5 +289,7 @@ public class ArgumentCommand implements CommandExecutor {
         arguments.put("BAD_VEGAN", Arrays.asList(BAD_VEGAN, BAD_VEGAN_2));
         arguments.put("ECONOMY", Collections.singletonList(ECONOMY));
         arguments.put("PREDATORS", Arrays.asList(PREDATORS, PREDATORS_2));
+        arguments.put("OMEGA_3", Arrays.asList(OMEGA_3, OMEGA_3_2, OMEGA_3_3));
+
     }
 }
