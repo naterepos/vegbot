@@ -9,10 +9,11 @@ any given developer sees fit.
 1. Import project into any Java IDE
 2. Import the gradle workspace from the build.gradle file 
    1. Create a Discord App/Bot at [discord's developer portal](https://discord.com/developers/) 
-   2. Rename the `Settings.properties.off` to `Settings.properties`
-   3. Copy the app token from the app page to `Token` line in the settings file
-   4. Setup MySQL on the server the bot will run on and copy the database information to the rest of the fields
-   5. Copy the GuildID from your server to the file
+      - If you are using this in a testing environment, set the `Settings.properties.off` to `Settings.properties` and follow steps ii, iii, and iv
+      - If you are using this in a server, skip to steps 3 and 4 before doing ii, iii, and iv
+   2. Copy the app token from the app page to `Token` line in the settings file
+   3. Setup MySQL on the server the bot will run on and copy the database information to the rest of the fields
+   4. Copy the GuildID from your server to the file
 3. Run the `shadowJar` task
 4. Execute the jar file
 
@@ -25,7 +26,7 @@ the functionality of a command without having to worry about checking user input
 
 ### Storage Library
 
-Not only does VegBot automatically set up a MySQL database and relevent data, it also caches all user data as custom server
+Not only does VegBot automatically set up a MySQL database and relevant data, it also caches all user data as custom server
 users called `VegUsers`. This allows you to create extra information on users without having to touch REST APIs.
 
 ### Permission/Role Library

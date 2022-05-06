@@ -15,8 +15,11 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 
 import javax.security.auth.login.LoginException;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Optional;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 public class VegBot extends ListenerAdapter {
@@ -26,6 +29,11 @@ public class VegBot extends ListenerAdapter {
 
     public static void main(String[] args) throws LoginException, InterruptedException {
         instance = new VegBot();
+        try {
+            startUpRemote();
+        } catch(LoginException e) {
+            System.exit(1);
+        }
         instance.jda = JDABuilder.createLight(VegBot.getSetting("Token"), GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGE_REACTIONS)
                 .setActivity(Activity.playing("Type ?help to get started"))
                 .addEventListeners(new ChatEvents())
@@ -34,6 +42,31 @@ public class VegBot extends ListenerAdapter {
         UserRegistry.getOrCreate();
         MySQL.getOrCreate();
         CommandRegistry.getOrCreate();
+    }
+
+    private static void startUpRemote() throws LoginException {
+        Properties setup = new Properties();
+        try {
+            setup.load(VegBot.class.getResourceAsStream("/Setup.properties"));
+            Properties settings = new Properties();
+            if(setup.getProperty("UseCustomPath").equalsIgnoreCase("true")) {
+                if(Files.notExists(Paths.get(setup.getProperty("ConfigPath")))) {
+                    Path configPath = Files.createFile(Paths.get(setup.getProperty("ConfigPath")));
+                    settings.load(new FileInputStream(setup.getProperty("ConfigPath")));
+                    settings.setProperty("GuildID", "server_id");
+                    settings.setProperty("Token", "bot_token");
+                    settings.setProperty("MySQLHost", "host_name");
+                    settings.setProperty("MySQLDatabase", "database_name");
+                    settings.setProperty("MySQLUsername", "username");
+                    settings.setProperty("MySQLPassword", "password");
+                    settings.store(new FileOutputStream(configPath.toFile()), "VegBot Configuration. If you have an all number field, put [STRING] before it. I.E: \"password=[STRING]012345\"");
+                    System.err.println("\n\nConfiguration has not been setup. Please edit the Settings.properties to continue...\n\n");
+                    throw new LoginException();
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @SuppressWarnings("unchecked")
