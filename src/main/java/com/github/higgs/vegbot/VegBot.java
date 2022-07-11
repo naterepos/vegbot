@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Properties;
 
 public class VegBot extends ListenerAdapter {
@@ -34,7 +35,7 @@ public class VegBot extends ListenerAdapter {
         } catch(LoginException e) {
             System.exit(1);
         }
-        instance.jda = JDABuilder.createLight(VegBot.getSetting("Token"), GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGE_REACTIONS)
+        instance.jda = JDABuilder.createLight(VegBot.getSetting("Token"), Arrays.asList(GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGE_REACTIONS))
                 .setActivity(Activity.playing("Type ?help to get started"))
                 .addEventListeners(new ChatEvents())
                 .addEventListeners(new ConnectionEvents())
