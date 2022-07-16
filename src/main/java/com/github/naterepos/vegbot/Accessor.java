@@ -2,6 +2,7 @@ package com.github.naterepos.vegbot;
 
 import com.github.naterepos.vegbot.command.CommandRegistry;
 import com.github.naterepos.vegbot.interactions.InteractionRegistry;
+import com.github.naterepos.vegbot.interactions.VoiceHolder;
 import com.github.naterepos.vegbot.resources.Configuration;
 import com.github.naterepos.vegbot.resources.MySQL;
 import com.github.naterepos.vegbot.resources.Settings;
@@ -25,6 +26,10 @@ public interface Accessor {
 
     default Guild guild() {
         return jda().getGuildById(settings().getGuildID());
+    }
+
+    default VoiceHolder voiceHolder() {
+        return VoiceHolder.getOrCreate();
     }
 
     default Configuration config() {

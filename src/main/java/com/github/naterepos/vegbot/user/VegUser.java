@@ -19,6 +19,7 @@ public class VegUser implements Accessor {
     private final TreeMap<String, Role> roles;
 
     public VegUser(User user, Member member) {
+        this.points = 0;
         this.user = user;
         this.member = member;
         this.info = new Profile(this);
@@ -29,10 +30,11 @@ public class VegUser implements Accessor {
         return points;
     }
 
-    public void addPoints(PointActionTypes type, int points) {
-        if(points < 1) return;
-
+    public void addPoints(PointActionTypes type, int amount) {
+        points += type.getWorth(amount);
+        MySQL.getOrCreate().setPoints(user.getId(), points);
     }
+
 
     public boolean hasPermission(String permission) {
         if(permission == null) {
@@ -49,11 +51,11 @@ public class VegUser implements Accessor {
     public void removeRole(Role role) {
         data().removeRole(user.getId(), role);
         // Cannot remove classically since tree map does not allow null values
-        roles.entrySet().forEach(entry -> {
-            if(entry.getKey().equals(role.getID())) {
+        for (Map.Entry<String, Role> entry : roles.entrySet()) {
+            if (entry.getKey().equals(role.getID())) {
                 roles.remove(role.getID());
             }
-        });
+        }
         List<net.dv8tion.jda.api.entities.Role> possibleRole = guild().getRolesByName(role.getID(), true);
         if(possibleRole.size() != 0) {
             guild().removeRoleFromMember(member, possibleRole.get(0)).queue();
@@ -69,13 +71,13 @@ public class VegUser implements Accessor {
             guild().addRoleToMember(member, possibleRole.get(0)).queue();
         }
 
-        role.getChildren().forEach(child -> {
+        for (Map.Entry<String, Role> child : role.getChildren()) {
             // Discord aesthetic cleanup
             List<net.dv8tion.jda.api.entities.Role> rolesByName = guild().getRolesByName(child.getKey(), true);
-            if(rolesByName.size() != 0) {
+            if (rolesByName.size() != 0) {
                 guild().removeRoleFromMember(member, rolesByName.get(0)).queue();
             }
-        });
+        }
     }
 
     public Role getTopRole() {
@@ -131,17 +133,17 @@ public class VegUser implements Accessor {
 
         public void setRealName(String realName) {
             this.realName = realName;
-            MySQL.getOrCreate().setRealName(VegUser.this.user.getId(), realName);
+            MySQL.getOrCreate().setRealName(user.getId(), realName);
         }
 
         public void setPronouns(String pronouns) {
             this.pronouns = pronouns;
-            MySQL.getOrCreate().setPronouns(VegUser.this.user.getId(), pronouns);
+            MySQL.getOrCreate().setPronouns(user.getId(), pronouns);
         }
 
         public void setMonthsVegan(int monthsVegan) {
             this.monthsVegan = monthsVegan;
-            MySQL.getOrCreate().setMonthsVegan(VegUser.this.user.getId(), monthsVegan);
+            MySQL.getOrCreate().setMonthsVegan(user.getId(), monthsVegan);
         }
     }
 }

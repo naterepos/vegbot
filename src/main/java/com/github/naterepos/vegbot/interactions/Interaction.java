@@ -19,26 +19,15 @@ public class Interaction implements Accessor {
     private String currentEmote;
     private final VegUser reactor;
     private final Message origin;
-    private Interaction previous;
 
     public Interaction(VegUser reactor, Message origin) {
-        this(reactor, origin, null);
-    }
-
-    public Interaction(VegUser reactor, Message origin, Interaction previous) {
         this.reactor = reactor;
-        this.reactionMap = new HashMap<>();
         this.origin = origin;
-        this.previous = previous;
     }
 
     public void addOption(String emote, Action action) {
         reactionMap.put(emote, action);
         origin.addReaction(emote).queue();
-    }
-
-    @Nullable public Interaction getPrevious() {
-        return previous;
     }
 
     public void addOptions(Map<String, Action> reactionMap) {
@@ -66,20 +55,12 @@ public class Interaction implements Accessor {
     public void finishAndCleanup(boolean deleteMessage, boolean completelyWipe) {
         this.isLive = false;
         if(deleteMessage) {
-            if(completelyWipe && previous != null) {
-                previous.finishAndCleanup(true, true);
-                /*for(Message message : messages) {
-                    if(message.getAuthor().getId().equals(reactor.getUser().getId()) || message.getAuthor().getId().equals(origin.getAuthor().getId())) {
-                        origin.getChannel().deleteMessageById(message.getId()).queueAfter(4, TimeUnit.SECONDS);
-                    }
-                }*/
-                //TODO: Delete
-                /*
+            if(completelyWipe) {
                 origin.getChannel().getHistoryAfter(origin.getId(), 30).queueAfter(4, TimeUnit.SECONDS, messageHistory -> messageHistory.getRetrievedHistory().forEach(message -> {
                     if(message.getAuthor().getId().equals(reactor.getUser().getId()) || message.getAuthor().getId().equals(origin.getAuthor().getId())) {
                         message.delete().queue();
                     }
-                }));*/
+                }));
             }
             origin.delete().queue();
         }

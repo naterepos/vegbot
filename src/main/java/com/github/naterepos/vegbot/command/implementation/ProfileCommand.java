@@ -47,37 +47,37 @@ public class ProfileCommand implements CommandExecutor, Accessor {
 
         context.getChannel().sendMessageEmbeds(embedBuilder).queue(message -> {
             interactionMessage = message;
-            Interaction.Action modificationAction = new Interaction.Action(Interaction.Action.DEFAULT_TEXT_ACTION, this::modify);
             modificationTrigger = new Interaction(source, message);
+
+            Interaction.Action modificationAction = new Interaction.Action(Interaction.Action.DEFAULT_TEXT_ACTION, () -> {
+                modificationTrigger.finishAndCleanup(true, false);
+                MessageEmbed selectEmbed = new EmbedBuilder()
+                        .setColor(Color.CYAN)
+                        .addField("Profile Editor",
+                                "🔤  -  Modify Name\n\n" +
+                                        "♀ ️ -  Modify Pronouns\n\n" +
+                                        "📅  -  Modify Months Vegan", false)
+                        .build();
+
+                interactionMessage.getChannel().sendMessageEmbeds(selectEmbed).queue(selectMessage -> {
+                    this.selectMessage = selectMessage;
+
+                    Interaction modifyProfile = new Interaction(source, selectMessage);
+                    modifyProfile.addOption("🔤", new Interaction.Action(this::modifyName, () ->
+                            selectMessage.getChannel().sendMessage("Please enter " + nounPrefix + " preferred name: ").queue()));
+                    modifyProfile.addOption("♀", new Interaction.Action(this::modifyPronouns, () ->
+                            selectMessage.getChannel().sendMessage("Please enter " + nounPrefix + " preferred pronouns: ").queue()));
+                    modifyProfile.addOption("📅", new Interaction.Action(this::modifyMonthsVegan, () ->
+                            selectMessage.getChannel().sendMessage("Please enter " + nounPrefix + " time as a vegan (months): ").queue()));
+                    interactions().addUser(source.getUser().getId(), modifyProfile);
+                });
+            });
+
             modificationTrigger.addOption("✍️", modificationAction);
             interactions().addUser(source.getUser().getId(), modificationTrigger);
         });
 
         return CommandResult.empty();
-    }
-
-    private void modify() {
-        modificationTrigger.finishAndCleanup(true, false);
-        MessageEmbed selectEmbed = new EmbedBuilder()
-                .setColor(Color.CYAN)
-                .addField("Profile Editor",
-                  "🔤  -  Modify Name\n\n" +
-                        "♀ ️ -  Modify Pronouns\n\n" +
-                        "📅  -  Modify Months Vegan", false)
-                .build();
-
-        interactionMessage.getChannel().sendMessageEmbeds(selectEmbed).queue(selectMessage -> {
-            this.selectMessage = selectMessage;
-
-            Interaction modifyProfile = new Interaction(source, selectMessage, modificationTrigger);
-            modifyProfile.addOption("🔤", new Interaction.Action(this::modifyName, () ->
-                    selectMessage.getChannel().sendMessage("Please enter " + nounPrefix + " preferred name: ").queue()));
-            modifyProfile.addOption("♀", new Interaction.Action(this::modifyPronouns, () ->
-                    selectMessage.getChannel().sendMessage("Please enter " + nounPrefix + " preferred pronouns: ").queue()));
-            modifyProfile.addOption("📅", new Interaction.Action(this::modifyMonthsVegan, () ->
-                    selectMessage.getChannel().sendMessage("Please enter " + nounPrefix + " time as a vegan (months): ").queue()));
-            interactions().addUser(source.getUser().getId(), modifyProfile);
-        });
     }
 
     private void modifyPronouns(String input) {

@@ -5,6 +5,7 @@ import com.github.naterepos.vegbot.command.Command;
 import com.github.naterepos.vegbot.command.CommandContext;
 import com.github.naterepos.vegbot.command.CommandResult;
 import com.github.naterepos.vegbot.command.CommandResults;
+import com.github.naterepos.vegbot.interactions.Interaction;
 import com.github.naterepos.vegbot.user.VegUser;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.react.MessageReactionAddEvent;
@@ -55,14 +56,17 @@ public class ChatEvents extends ListenerAdapter implements Accessor {
             });
         } else {
             Optional<VegUser> userOpt = users().getUser(e.getAuthor().getIdLong());
-            userOpt.flatMap(user -> interactions().getActiveInteraction(user.getUser().getId())).ifPresent(interaction -> {
+            Optional<Interaction> interactionOpt = userOpt.flatMap(user -> interactions().getActiveInteraction(user.getUser().getId()));
+            if(interactionOpt.isPresent()) {
+                Interaction interaction = interactionOpt.get();
                 if(interaction.getOriginalMessage().getChannel().getId().equals(e.getChannel().getId()) && interaction.hasValidTextAction()) {
                     interaction.registerTextInput(e.getMessage().getContentRaw());
                     interaction.finishAndCleanup(true, true);
                 }
-            });
+            } else if(settings().isAllowedPointChannel(e.getChannel().getId())) {
+                userOpt.ifPresent(user -> user.addPoints(PointActionTypes.SENT_CHAT, 1));
+            }
         }
-
     }
 
     @Override
