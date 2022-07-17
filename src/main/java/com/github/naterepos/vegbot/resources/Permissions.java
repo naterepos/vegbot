@@ -12,6 +12,7 @@ public class Permissions {
     public static final String LINKS_VIEW = "links.view";
     public static final String LINKS_EDIT = "links.edit";
     public static final String ARGUMENT = "argument";
+    public static final String PURGE = "purge";
 
     public static final Map<String, Boolean> ADMINISTRATION;
     public static final Map<String, Boolean> COORDINATOR;
@@ -33,5 +34,6 @@ public class Permissions {
         ADMINISTRATION = new HashMap<>();
         ADMINISTRATION.put(PERMISSION_EDIT, true);
         ADMINISTRATION.put(LINKS_EDIT, true);
+        ADMINISTRATION.put(PURGE, true);
     }
 }

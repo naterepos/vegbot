@@ -135,10 +135,9 @@ public class ArgumentCommand implements CommandExecutor, Accessor {
 
     private static final String TASTE_2 =
             "Compared to killing animals for food, we can note the similarities in the situations. " +
-            "In the first, we see immense harm in that 10,000+ animals per person are killed (based on averages) because the killer gets sensory pleasure from their flesh. " +
-            "This keeps in mind that the harm can be easily avoided by simply eating a plant based diet. " +
-            "In our example with dogs, only 100 dogs are killed (1/100 the harm) for the same reason in that it gives the person sensory pleasure. In the same way, this can be completely avoided simply by choosing " +
-            "to avoid killing the dogs in the example.";
+            "In the first, we see immense harm in that 10,000+ animals per person are killed in a lifetime (based on averages) justified by the killer gets sensory pleasure from their flesh. " +
+            "Keep in mind, in neither of these situations is the harm necessary. I can choose to not kill a dog for pleasure in the same way I can choose not to kill any other animal. " +
+            "Furthermore, killing the dogs would cause 100x less harm (100 animals compared to 10,000). If you feel killing 100 dogs is bad, why do something 100x as harmful?";
 
     private static final String ANCESTORS =
             "Much of the way humans perceive culture and ethics at a quick glance is by looking at what people did in the past. The basic thought pattern that stems from this belief is that since we did it in the past, it must be fine for us to do it today. " +

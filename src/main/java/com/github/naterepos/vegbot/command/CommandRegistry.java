@@ -78,6 +78,13 @@ public class CommandRegistry implements Accessor {
                 .usage(key + "leaderboards")
                 .executor(LeaderboardCommand::new)
                 .build());
+
+        registerCommand(Command.builder().keys("purge", "deleteall", "removeall")
+                .information("Purges all non-pinned messages in a channel")
+                .usage(key + "purge")
+                .permission(Permissions.PURGE)
+                .executor(PurgeCommand::new)
+                .build());
     }
 
     public void registerCommand(Command command) {
