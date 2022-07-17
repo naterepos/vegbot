@@ -3,6 +3,7 @@ package com.github.naterepos.vegbot;
 import com.github.naterepos.vegbot.command.CommandRegistry;
 import com.github.naterepos.vegbot.events.ChatEvents;
 import com.github.naterepos.vegbot.events.ConnectionEvents;
+import com.github.naterepos.vegbot.events.VoiceEvents;
 import com.github.naterepos.vegbot.resources.MySQL;
 import com.github.naterepos.vegbot.resources.UserRegistry;
 import net.dv8tion.jda.api.JDA;
@@ -25,6 +26,7 @@ public class VegBot extends ListenerAdapter implements Accessor {
             instance.jda = JDABuilder.createLight(instance.settings().getToken(), Arrays.asList(GatewayIntent.GUILD_MESSAGES, GatewayIntent.DIRECT_MESSAGES, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_MESSAGE_REACTIONS))
                     .setActivity(Activity.playing("Type " + instance.settings().getCommandKey() + "help to get started"))
                     .addEventListeners(new ChatEvents())
+                    .addEventListeners(new VoiceEvents())
                     .addEventListeners(new ConnectionEvents())
                     .build().awaitReady();
             UserRegistry.getOrCreate();

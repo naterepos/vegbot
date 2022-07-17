@@ -178,11 +178,10 @@ public class MySQL implements Accessor {
         Map<String, String> info = new HashMap<>();
         try(Connection conn = getConnection()) {
             assert conn != null;
-            PreparedStatement stmt = conn.prepareStatement("select * from USER_DATA where UUID=?");
+            PreparedStatement stmt = conn.prepareStatement("select NAME, MONTHS_VEGAN, PRONOUNS from USER_DATA where UUID=?");
             stmt.setString(1, user);
             try(ResultSet rs = stmt.executeQuery()) {
                 if(rs.next()) {
-                    info.put("POINTS", String.valueOf(Optional.of(rs.getInt("POINTS")).orElse(0)));
                     info.put("NAME", Optional.ofNullable(rs.getString("NAME")).orElse("N/A"));
                     info.put("MONTHS_VEGAN", String.valueOf(Optional.of(rs.getInt("MONTHS_VEGAN")).orElse(0)));
                     info.put("PRONOUNS", Optional.ofNullable(rs.getString("PRONOUNS")).orElse("N/A"));
@@ -193,6 +192,23 @@ public class MySQL implements Accessor {
             e.printStackTrace();
         }
         return info;
+    }
+
+
+    public int getPoints(String user) {
+        try(Connection conn = getConnection()) {
+            assert conn != null;
+            PreparedStatement stmt = conn.prepareStatement("select POINTS from USER_DATA where UUID=?");
+            stmt.setString(1, user);
+            try(ResultSet rs = stmt.executeQuery()) {
+                if(rs.next()) {
+                    return rs.getInt("POINTS");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     public TreeMap<String, Role> getRoles(VegUser user) {

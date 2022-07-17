@@ -62,6 +62,8 @@ public class ChatEvents extends ListenerAdapter implements Accessor {
                 if(interaction.getOriginalMessage().getChannel().getId().equals(e.getChannel().getId()) && interaction.hasValidTextAction()) {
                     interaction.registerTextInput(e.getMessage().getContentRaw());
                     interaction.finishAndCleanup(true, true);
+                } else if(settings().isAllowedPointChannel(e.getChannel().getId())) {
+                    userOpt.ifPresent(user -> user.addPoints(PointActionTypes.SENT_CHAT, 1));
                 }
             } else if(settings().isAllowedPointChannel(e.getChannel().getId())) {
                 userOpt.ifPresent(user -> user.addPoints(PointActionTypes.SENT_CHAT, 1));

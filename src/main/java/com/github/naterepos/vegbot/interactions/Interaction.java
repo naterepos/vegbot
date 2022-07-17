@@ -23,6 +23,7 @@ public class Interaction implements Accessor {
     public Interaction(VegUser reactor, Message origin) {
         this.reactor = reactor;
         this.origin = origin;
+        this.reactionMap = new HashMap<>();
     }
 
     public void addOption(String emote, Action action) {

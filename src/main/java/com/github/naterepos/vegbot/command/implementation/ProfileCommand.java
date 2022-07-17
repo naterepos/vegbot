@@ -42,6 +42,7 @@ public class ProfileCommand implements CommandExecutor, Accessor {
                 .addField("Pronouns", vegUser.getProfile().getPronouns(), true)
                 .addField("Role", vegUser.getTopRole().getName(), true)
                 .addField("Time as a Vegan", vegUser.getProfile().getFormattedTimeVegan(), true)
+                .addField("Points", String.valueOf(vegUser.getPoints()), true)
                 .setColor(Color.CYAN)
                 .build();
 

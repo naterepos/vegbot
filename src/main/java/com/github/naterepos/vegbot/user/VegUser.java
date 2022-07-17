@@ -19,9 +19,9 @@ public class VegUser implements Accessor {
     private final TreeMap<String, Role> roles;
 
     public VegUser(User user, Member member) {
-        this.points = 0;
         this.user = user;
         this.member = member;
+        this.points = data().getPoints(user.getId());
         this.info = new Profile(this);
         this.roles = data().getRoles(this);
     }
