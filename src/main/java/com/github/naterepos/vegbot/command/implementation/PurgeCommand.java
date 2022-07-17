@@ -38,7 +38,7 @@ public class PurgeCommand implements CommandExecutor {
                         }
                     }
                 } else {
-                    messages.set(delete.size());
+                    messages.set(delete.size() - 2);
                     isDone.set(true);
                 }
             } else {
@@ -51,7 +51,7 @@ public class PurgeCommand implements CommandExecutor {
                         lastMessage.set(message);
                     }
                 } else {
-                    messages.set(delete.size());
+                    messages.set(delete.size() - 2);
                     isDone.set(true);
                 }
             }
@@ -60,9 +60,9 @@ public class PurgeCommand implements CommandExecutor {
         for(int i = 0; i < completed.size(); i++) {
             completed.get(i).join();
             if(i == (completed.size() - 1)) {
-                return CommandResult.temporary(CommandResults.SUCCESS, context.getChannel().getName() + " has had " + messages + " removed!", 4);
+                return CommandResult.temporary(CommandResults.SUCCESS, context.getChannel().getName() + " has had " + messages + " messages removed!", 4);
             }
         }
-        return CommandResult.temporary(CommandResults.SUCCESS, context.getChannel().getName() + " has had " + messages + " removed!", 4);
+        return CommandResult.empty();
     }
 }
