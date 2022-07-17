@@ -5,9 +5,8 @@ import com.github.naterepos.vegbot.user.VegUser;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 public class UserRegistry implements Accessor {
 
@@ -34,6 +33,16 @@ public class UserRegistry implements Accessor {
             return Optional.of(new VegUser(user, member));
         }
         return Optional.empty();
+    }
+
+    public CompletableFuture<Set<VegUser>> getTopLeaderboard() {
+        return CompletableFuture.supplyAsync(() -> {
+            Set<VegUser> top = new TreeSet<>(Comparator.naturalOrder());
+            for (Member member : getAllMembers()) {
+                getUser(member.getIdLong()).ifPresent(top::add);
+            }
+            return top;
+        });
     }
 
     public List<Member> getAllMembers() {

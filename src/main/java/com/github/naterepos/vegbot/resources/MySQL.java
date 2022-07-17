@@ -194,7 +194,6 @@ public class MySQL implements Accessor {
         return info;
     }
 
-
     public int getPoints(String user) {
         try(Connection conn = getConnection()) {
             assert conn != null;

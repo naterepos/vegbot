@@ -27,9 +27,9 @@ public class CommandRegistry implements Accessor {
     public static CommandRegistry getOrCreate() {
         if(instance == null) {
             instance = new CommandRegistry();
+            instance.key = instance.settings().getCommandKey();
             instance.commandKeyMap = new HashMap<>();
             instance.registerDefaultCommands();
-            instance.key = instance.settings().getCommandKey();
         }
         return instance;
     }
@@ -71,6 +71,12 @@ public class CommandRegistry implements Accessor {
                 .usage(key + "argument [<topic>]")
                 .permission(Permissions.ARGUMENT)
                 .executor(ArgumentCommand::new)
+                .build());
+
+        registerCommand(Command.builder().keys("leaderboards", "top", "leaderboards")
+                .information("Show the top players by activity")
+                .usage(key + "leaderboards")
+                .executor(LeaderboardCommand::new)
                 .build());
     }
 

@@ -5,12 +5,13 @@ import com.github.naterepos.vegbot.events.PointActionTypes;
 import com.github.naterepos.vegbot.resources.MySQL;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class VegUser implements Accessor {
+public class VegUser implements Accessor, Comparable<VegUser> {
 
     private final User user;
     private int points;
@@ -94,6 +95,11 @@ public class VegUser implements Accessor {
 
     public Profile getProfile() {
         return info;
+    }
+
+    @Override
+    public int compareTo(@NotNull VegUser other) {
+        return Integer.compare(other.points, this.points);
     }
 
     public class Profile {
